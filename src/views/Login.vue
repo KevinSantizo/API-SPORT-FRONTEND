@@ -48,7 +48,7 @@
              }
     },
 
-    computed: {
+    methods: {
         login (){
             let username = this.username
             let password = this.password

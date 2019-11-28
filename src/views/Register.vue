@@ -69,7 +69,7 @@
 import axios from'axios'
 import swal from 'sweetalert'
 
-let URL =  'http://192.168.88.222:8000/'
+let URL =  'https://api-backend-canchas.herokuapp.com/'
     export default {
          data(){
              return {
