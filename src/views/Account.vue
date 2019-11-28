@@ -1,6 +1,6 @@
 <template>
-   <v-card  class="overflow-hidden mx-auto back-ground">
-        <v-toolbar extended prominent flat text  class="back-ground" dark height="57">
+   <v-container  class="overflow-hidden mx-auto back-ground"  style="padding-left: 3px; padding-right: 3px;">
+        <v-app-bar extended app flat text  class="back-ground" dark height="57">
             <v-app-bar-nav-icon color="amber lighten-5" @click="drawer = !drawer" large></v-app-bar-nav-icon>
             <template v-slot:extension>
               <v-fab-transition>
@@ -10,12 +10,12 @@
               </v-fab-transition>
             </template>
               <v-toolbar-title class="ma-9" style="top: 0em; position: absolute;">
-                <span class=" font-weight-bold title font"></span>
-                <span class=" font-weight-medium title font">Reservaciones <v-divider inset vertical></v-divider> {{ quant }}</span>
+                <span class=" font-weight-bold title font link"></span>
+                <span class=" font-weight-medium title font lik">Reservaciones <v-divider inset vertical></v-divider> {{ quant }}</span>
               </v-toolbar-title>
             <v-spacer>
             </v-spacer>
-        </v-toolbar>
+        </v-app-bar>
         <v-navigation-drawer dense dark absolute v-model="drawer" temporary class="back-ground" >
       <template v-slot:prepend>
           <v-list-item> 
@@ -37,10 +37,10 @@
           <v-list shaped>
           <v-list-item-group  v-model="items" class="link" color="amber lighten-5">
               <v-list-item  class="link"   v-for="item in items" :key="item.title" router :to="item.to" min-width="2" >
-                  <v-list-item-icon>
+                  <v-list-item-icon class="link">
                       <v-icon medium class="link" size=25>{{ item.icon }}</v-icon>
                   </v-list-item-icon>
-                    <v-list-item-content>
+                    <v-list-item-content class="link">
                       <v-list-item-title class="font-weight-medium subtitle-1 link font">{{ item.title }}</v-list-item-title>
                   </v-list-item-content>
               </v-list-item>
@@ -53,8 +53,7 @@
           </v-list>
       </v-navigation-drawer>
         <BottomNavigation/>
-      <v-sheet  id="scroll-area-1"  class="overflow-y-auto" style="border-radius: 25px 25px 0px 0px;" max-height="620">
-        <v-container class="bottom amber lighten-5">
+        <v-container class="bottom amber lighten-5" style="border-radius: 25px 25px 0px 0px;" >
           <v-row justify="center">
 
              <v-hover v-for="(reservation, i) in this.user_reservations.reservations" :key="i">
@@ -71,7 +70,7 @@
                 <span class="body-2 font-weight-bold font  white--text">Hora: {{ reservation.schedule.start_time}} </span><br>
                 </v-card-subtitle>  
                  <v-card class="profile" width=75 heigth=50 style="position: absolute; bottom: 0.5em; right: 0.5em; border-radius: 10px;">
-                <v-img :src="'https://api-backend-canchas.herokuapp.com'+reservation.field_reserve.company.image" alt="Image" width=75 height=50 >
+                <v-img :src="'https://api-backend-canchas.herokuapp.com/'+reservation.field_reserve.company.image" alt="Image" width=75 height=50 >
                 </v-img>
                 </v-card>
             </v-img>     
@@ -87,8 +86,7 @@
           </v-hover>
           </v-row>
         </v-container>
-      </v-sheet>
- </v-card>
+   </v-container>
 </template>
 
 <script>
@@ -172,6 +170,6 @@ methods: {
 
    }
    .link {
-     text-decoration: none;
+     text-decoration: none !important;
    }
 </style>

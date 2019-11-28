@@ -1,6 +1,6 @@
 <template>
-    <v-card class="overflow-hidden mx-auto back-ground">
-        <v-app-bar extended prominent flat text   class="back-ground"  dark height="57">
+    <v-container class="overflow-hidden mx-auto back-ground">
+        <v-app-bar extended app flat text   class="back-ground"  dark >
           <div class="ma-3">
                 <v-icon color="amber lighten-5" size="25">mdi-calendar</v-icon><v-divider inset vertical class="mx-1"></v-divider><span class="font-weight-bold caption font" > {{ this.dayss[new Date().getDay() ]}}, {{  this.months[new Date().getMonth()] }} - {{ new Date().getDate()}} | {{ new Date().getFullYear() }}</span>
          </div>
@@ -9,8 +9,7 @@
                <v-toolbar-title class="font font-weight-medium" style="top: 3em;  position: absolute;">Explorar</v-toolbar-title>
         </v-app-bar>
       <BottomNavigation/>  
-      <v-sheet  id="scroll-area-1"  class="overflow-y-auto" style="border-radius: 25px 25px 0px 0px;" max-height="620">
-        <v-container class="bottom amber lighten-5" >
+        <v-container class="bottom amber lighten-5" style="border-radius: 25px 25px 0px 0px;">
             <v-item-group> 
             <v-row justify-space-around>
             <v-col  v-for="(company, index) in companies" :key="index" cols="12" md="4"> 
@@ -76,8 +75,7 @@
             </v-row>
             </v-item-group>
         </v-container>
-      </v-sheet>
-    </v-card>
+    </v-container>
 </template>
 
 <script>
@@ -171,6 +169,8 @@ export default {
    }
    .bottom {
      padding-bottom: 70px;
+     padding-right: 0px;
+     padding-left: 0px;
    }
    .container {
     max-width: 100%;

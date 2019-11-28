@@ -1,6 +1,6 @@
 <template>
-  <v-bottom-navigation class="back-ground border" dark absolute height=60>
-    <v-btn icon class="link ma-2 " color="amber lighten-5" router to="/home" >
+  <v-bottom-navigation class="back-ground border" dark fixed height=60>
+    <v-btn fab icon class="link ma-2 " color="amber lighten-5" router to="/home" >
       <!--<span class="caption font-weight-bold font">Inicio</span>-->
       <v-icon app text size=35 color="amber lighten-5">mdi-home-outline</v-icon>
     </v-btn>
@@ -44,7 +44,7 @@ export default {
      font-family: 'Ubuntu', sans-serif;
    }
    .link {
-     text-decoration: none;
+     text-decoration: none !important;
    }
    .back-ground {
     background-color: #011427;

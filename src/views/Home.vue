@@ -1,6 +1,6 @@
 <template>
-  <v-card class="overflow-hidden amber lighten-5">
-    <v-app-bar absolute dark flat text scroll-target="#playground-example" extended  collapse-on-scroll class="back-ground">
+  <v-container class="amber lighten-5 overflow-hidden mx-auto ">
+    <v-app-bar  dark flat text app extended  collapse-on-scroll class="back-ground">
       <v-app-bar-nav-icon color="amber lighten-5" large @click="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title style="margin-top: 2em;">
         <span class=" font-weight-bold title font">Bienvenido {{ user_name }}</span>
@@ -46,7 +46,6 @@
           </v-list>
       </v-navigation-drawer>
     <BottomNavigation/> 
-    <v-sheet  id="playground-example" class="overflow-y-auto" max-height="725">
       <v-container class="bottom amber lighten-5" >
         <v-row justify="center">
           <v-hover>
@@ -172,7 +171,7 @@
                         <span v-else class="body-2 font-weight-bold font  white--text">11 Jugadores</span><br>
                         </v-card-subtitle>    
                         <v-card class="profile" width=75 heigth=50 style="position: absolute; bottom: 0.5em; right: 0.5em; border-radius: 10px;">
-                        <img :src="'https://api-sport.herokuapp.com'+reservation.field_reserve.company.image" alt="Image" width=75 height=50 >
+                        <img :src="'http://192.168.88.222:8000'+reservation.field_reserve.company.image" alt="Image" width=75 height=50 >
                         </v-card>
                     </v-img>                    
                     <v-card-actions>
@@ -189,8 +188,7 @@
           </v-slide-group>
           </div>
       </v-container>
-    </v-sheet>      
-  </v-card>
+  </v-container>
 </template>
 <script>
 import axios from 'axios'
@@ -287,7 +285,6 @@ let URL = 'https://api-backend-canchas.herokuapp.com/'
    }
   .bottom {
      padding-bottom: 70px;
-     margin-top: 100px;
    }
    .back-ground {
     background-color: #011427 !important;
