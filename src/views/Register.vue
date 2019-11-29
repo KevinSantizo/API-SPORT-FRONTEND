@@ -2,8 +2,8 @@
     <v-container height="100%" class="my-0">
         <v-row justify="center" align="center" >
             <div class="form-group ma-3">
-                <v-btn class="my-1" block  color="light-blue darken-4 white--text" ><v-icon left size="25">mdi-facebook</v-icon> REGÍSTRATE CON FACEBOOK</v-btn>
-                <v-btn block  color="red darken-1 white--text" ><v-icon left size="25">mdi-google-plus</v-icon> REGÍSTRATE CON GOOGLE</v-btn>
+                <v-btn class="my-1" disabled block  color="light-blue darken-4 white--text" ><v-icon left size="25">mdi-facebook</v-icon> REGÍSTRATE CON FACEBOOK</v-btn>
+                <v-btn block disabled color="red darken-1 white--text" ><v-icon left size="25">mdi-google-plus</v-icon> REGÍSTRATE CON GOOGLE</v-btn>
                     <v-divider class="my-2"></v-divider>
                     <div style="margin-top: -1em !important;">
                     <form  @submit.prevent="register">
