@@ -2,8 +2,8 @@
     <v-container height="100%">
         <v-row justify="center" align="center" >
             <div class="form-group ma-6 pa-12">
-                <v-btn class="my-3"  block  color="light-blue darken-4 white--text" ><v-icon left size="25">mdi-facebook</v-icon> INICIA SESIÓN CON FACEBOOK</v-btn>
-                <v-btn block  color="red darken-1 white--text" ><v-icon left size="25">mdi-google-plus</v-icon> INICIA SESIÓN CON GOOGLE</v-btn>
+                <v-btn class="my-3"  block  disabled color="light-blue darken-4 white--text" ><v-icon left size="25">mdi-facebook</v-icon> INICIA SESIÓN CON FACEBOOK</v-btn>
+                <v-btn block  disabled color="red darken-1 white--text" ><v-icon left size="25">mdi-google-plus</v-icon> INICIA SESIÓN CON GOOGLE</v-btn>
                 <v-divider class="my-3"></v-divider>
                     <div>
                         <form @submit.prevent="login" id="login-form">

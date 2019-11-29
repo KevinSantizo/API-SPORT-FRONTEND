@@ -171,7 +171,7 @@
                         <span v-else class="body-2 font-weight-bold font  white--text">11 Jugadores</span><br>
                         </v-card-subtitle>    
                         <v-card class="profile" width=75 heigth=50 style="position: absolute; bottom: 0.5em; right: 0.5em; border-radius: 10px;">
-                        <img :src="'http://192.168.88.222:8000'+reservation.field_reserve.company.image" alt="Image" width=75 height=50 >
+                        <img :src="'https://api-backend-canchas.herokuapp.com'+reservation.field_reserve.company.image" alt="Image" width=75 height=50 >
                         </v-card>
                     </v-img>                    
                     <v-card-actions>
