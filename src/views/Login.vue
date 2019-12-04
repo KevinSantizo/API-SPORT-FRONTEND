@@ -30,11 +30,6 @@
 
 <script>
     export default {
-         name: 'Basic',
-            components: {
-            mdbInput,
-            mdbBtn
-            },
          data (){
              return {
                 username: '',
