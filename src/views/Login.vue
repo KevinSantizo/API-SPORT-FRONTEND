@@ -29,7 +29,6 @@
 
 
 <script>
-  import { mdbInput, mdbBtn } from 'mdbvue';
     export default {
          name: 'Basic',
             components: {
