@@ -4,7 +4,7 @@
               <v-app-bar-nav-icon color="black" x-large @click="drawer = !drawer"></v-app-bar-nav-icon>
                 <v-row justify="center">
                   <div class="ma-7">
-                    <v-icon color="black" size="25">mdi-calendar</v-icon><v-divider inset vertical class="mx-1"></v-divider><span class="font-weight-bold caption font" > {{ this.dayss[new Date().getDay() ]}}, {{  this.months[new Date().getMonth()] }} - {{ new Date().getDate()}} | {{ new Date().getFullYear() }}</span>
+                        <span class="font subtitle-1" >Reservaciones: {{ this.quant }}</span><br>
                   </div>
                   <v-divider inset vertical class="transparent mx-4"></v-divider>
                     <v-icon color="black" size="35" class="my-2 ">mdi-soccer</v-icon>
@@ -49,63 +49,35 @@
         <v-container class="bottom " style="border-radius: 25px 25px 0px 0px;" >
           <div>
             <span class="headline font color-c font-weight-medium">{{ this.name }} {{ this.last_name }}</span><br>
-            <span class="font subtitle-1">{{ this.user_name }}</span><br>
-            <span class="font subtitle-1">{{ this.email }}</span><br>
-            <div v-if="this.quant == 0">
-            <span class="font subtitle-1 red--text">No tienes ninguna reservación</span><br>
-            </div>
-            <div v-else>
-            <span class="font subtitle-1" >Reservaciones: {{ this.quant }}</span><br>
-            </div>
-            <v-btn color="orange" :elevation=10 outlined block small class="font">Editar perfil</v-btn>
+            <span class="font subtitle-1 font-weight-bold primary--text">Estas son todas tus reservaciones.</span><br>
           </div>
           <v-divider></v-divider>
-          <template v-if="this.quantity == 0">
-            <v-row justify="center" class="my-12">
-            <div>
-            <span class="headline font">Aún no haz reservado</span><br>
-            <v-row justify="center" >  
-                <router-link :to="{name: 'reserve'}" class="title">Reserva aquí</router-link>
-              </v-row>
-            </div>
-            </v-row>
-          </template>
-            <template v-else>
-            <span class="title font color-c font-weight-medium">Pendientes: {{ this.quantity }}</span>
           <v-row justify="center">
-             <v-hover v-for="(reservation, i) in this.user_reservations_pending.reservations" :key="i">
-              <v-card class="link ma-1 light-green lighten-5" outlined style="border-radius: 10px;"  width=375  height=265 :elevation=12>
-                <v-img src="https://img.freepik.com/foto-gratis/representacion-3d-balon-futbol-linea-campo-futbol_41667-272.jpg?size=626&ext=jpg" class="white--text align-end" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.9)" height="215px">
-              <v-icon  style="top: 0.2em; right: 0.2em; position: absolute;" size="30" color="white">mdi-soccer</v-icon>
-              <v-card-title><span></span>{{ reservation.field_reserve.company.name }}, {{ reservation.field_reserve.company.town.department.name }}</v-card-title>
-                <v-card-subtitle>
-                <span class="body-2 font-weight-bold font  white--text">Fecha: {{ reservation.field_reserve.company.address }}</span><br>
-                <span class="body-2 font-weight-bold font  white--text">Fecha: {{ reservation.schedule_date }}</span><br>
-                 <span v-if="reservation.field_reserve.type == 1" class="body-2 font-weight-bold font  white--text">Tipo de cancha: 5 Jugadores</span>
-                <span v-else-if="reservation.field_reserve.type == 2" class="body-2 font-weight-bold font  white--text">7 Jugadores</span>
-                <span v-else class="body-2 font-weight-bold font  white--text">11 Jugadores</span><br>
-                <span class="body-2 font-weight-bold font  white--text">Hora: {{ reservation.schedule.start_time}} </span><br>
-                </v-card-subtitle>  
-                 <v-card class="profile" width=75 heigth=50 style="position: absolute; bottom: 0.5em; right: 0.5em; border-radius: 10px;">
-                <v-img :src="'https://api-backend-canchas.herokuapp.com'+reservation.field_reserve.company.image" alt="Image" width=75 height=50 >
-                </v-img>
+             <v-hover v-for="(reservation, i) in this.user_reservations.reservations" :key="i">
+               <v-card class="mx-auto ma-1" outlined>
+                    <v-list-item three-line>
+                    <v-list-item-content>
+                        <div class="headline font-weight-bold mb-4">{{reservation.field_reserve.company.name}}</div>
+                        <v-list-item-title class="title mb-1">Cancha {{reservation.field_reserve.name}}</v-list-item-title>
+                        <v-list-item-subtitle>
+                            <span class="body-2 font-weight-bold font  black--text">Fecha: {{ reservation.schedule_date }}</span><br>
+                            <span class="body-2 font-weight-bold font  black--text">Hora: {{ reservation.schedule.start_time}} </span><br>
+                            <span v-if="reservation.field_reserve.type == 1" class="body-2 font-weight-bold font  black--text">Fútbol 5</span>
+                            <span v-else-if="reservation.field_reserve.type == 2" class="body-2 font-weight-bold font  black--text">Fútbol 7</span>
+                            <span v-else class="body-2 font-weight-bold font  black--text">Fútbol 11</span><br>
+                            <span class="body-2 font-weight-bold font  black--text">Hora: {{ reservation.schedule.start_time}} </span><br>
+                        </v-list-item-subtitle>
+                    </v-list-item-content>
+                    <v-hover>
+                        <v-card :elevation=12  width=125 heigth=75 style="border-radius: 10px;">
+                            <v-img   :src="'https://api-backend-canchas.herokuapp.com'+reservation.field_reserve.company.image"   alt="Image" width=125  height=75>
+                            </v-img>
+                        </v-card>
+                    </v-hover>
+                    </v-list-item>
                 </v-card>
-            </v-img>     
-            <v-card-actions>
-               <v-chip label dark small class="font-weight-bold back-ground font ">Total: Q.{{ reservation.field_reserve.price }}</v-chip>                    
-                  <v-btn icon><v-icon class="color-c" size="33">mdi-soccer-field</v-icon></v-btn>
-                  <v-spacer></v-spacer>
-                  <!--<v-btn class="link" icon color="blue-grey darken-1" ><v-icon size=25 color="blue-grey darken-1">mdi-pencil-outline</v-icon></v-btn>
-                        <v-divider inset vertical class="mx-0 transparent"></v-divider>
-                        <v-btn class="link" icon  color="red darken-4"  data-toggle="modal" ><v-icon size=25 color="red darken-4">mdi-trash-can-outline</v-icon></v-btn>-->
-            </v-card-actions>               
-              </v-card>
           </v-hover>
           </v-row>
-          <v-row justify="center" class="my-4">
-        <router-link :to="{name: 'all-user-reservations'}"><v-chip outlined color="primary"><span class="font subtitle-1 primary--text">Ver más</span> </v-chip></router-link>
-        </v-row>
-            </template>
         </v-container>
    </v-container>
 </template>
@@ -122,8 +94,6 @@ export default {
   data: () => ({
     reservations:[ ],
     user_reservations: [ ],
-    reservations_pending: [ ],
-    user_reservations_pending: [ ],
     months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
     dayss: ['Dom', 'Lun', 'Ma', 'Mie', 'Jue', 'Vie', 'Sab',],
     user_name: '',
@@ -168,25 +138,6 @@ mounted(){
       this.email = find_user_reservations.email
     })
 },
-
-methods: {
-  getUserReservationsPending() {
-      let path = URL+'api/user-reservation-pending/'
-      const requestOne = axios.get(path)
-      requestOne.then((response)=>{
-      this.reservations_pending = response.data
-      //console.log(this.reservations)
-      let find_user_reservations_pending = this.reservations_pending.find(v => v.id == this.$store.state.user)
-      this.user_reservations_pending = find_user_reservations_pending
-      //console.log(find_user_reservations);
-      this.quantity = find_user_reservations_pending.quantity
-      //console.log('Cantidad' + ' ' + this.quant);
-    })
-    },
-},
-created(){
-  this.getUserReservationsPending()
-}
 
 }
 </script>
