@@ -10,6 +10,7 @@ import InfoCompany from '@/views/InfoCompany'
 import Reservation from '@/views/Reservation'
 import Account from '@/views/Account'
 import Logout from '@/views/Logout.vue'
+import AllUserReservations from '@/views/AllUserReservations.vue'
 
 
 Vue.use(Router)
@@ -68,6 +69,11 @@ let router = new Router({
       path: '/logout', 
       name: 'logout', 
       component: Logout 
+    },
+    { 
+      path: '/all-user-reservations', 
+      name: 'all-user-reservations', 
+      component: AllUserReservations 
     },
   ]
 })
