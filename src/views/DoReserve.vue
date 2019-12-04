@@ -1,85 +1,118 @@
 <template>
-  <v-container class="overflow-hidden mx-auto back-ground" style="padding-left: 0px; padding-right: 0px;">
-    <v-app-bar extended app flat text  class="back-ground" dark >
-      <v-layout row wrap>
-        <v-flex xs12 md12>
-          <div class="my-2" style="position: absolute; ">
-            <v-btn icon class="link" router to="/reserve">
-              <v-icon color="amber lighten-5" dark size="45">mdi-chevron-left</v-icon>
-            </v-btn>
-          </div>
-        </v-flex>
-      </v-layout>
-       <v-row justify="center" align="center">
-            <v-icon color="amber lighten-5" size="25">mdi-calendar</v-icon><v-divider inset vertical class="mx-1"></v-divider><span class="font-weight-bold caption font" > {{ this.dayss[new Date().getDay() ]}}, {{  this.months[new Date().getMonth()] }} - {{ new Date().getDate()}} | {{ new Date().getFullYear() }}</span>
+  <v-container class="overflow-hidden mx-auto" style="padding-left: 0px; padding-right: 0px;">
+     <v-app-bar  class="white" text height=85 app>
+              <v-app-bar-nav-icon color="black" x-large @click="drawer = !drawer"></v-app-bar-nav-icon>
+                <v-row justify="center">
+                  <div class="ma-7">
+                    <v-icon color="black" size="25">mdi-calendar</v-icon><v-divider inset vertical class="mx-1"></v-divider><span class="font-weight-bold caption font" > {{ this.dayss[new Date().getDay() ]}}, {{  this.months[new Date().getMonth()] }} - {{ new Date().getDate()}} | {{ new Date().getFullYear() }}</span>
+                  </div>
+                  <v-divider inset vertical class="transparent mx-4"></v-divider>
+                    <v-icon color="black" size="35" class="my-2 ">mdi-soccer</v-icon>
+                </v-row>
+        </v-app-bar>
+     <v-navigation-drawer dense dark app v-model="drawer"  temporary class="grey lighten-2" style="border-radius: 0px 35px 35px 0px;">
+      <template v-slot:prepend>
+          <v-list-item> 
+              <v-avatar class="profile my-5"  size="75"> 
+                    <img src="https://static.platzi.com/static/website/v2/images/avatar_default.afdd5b436fc2.png" alt="">
+                </v-avatar> 
+                <v-divider inset vertical class="mx-2 transparent"> 
+                </v-divider> 
+                <v-list-item-content>
+                    <v-list-item-title  class="font-weight-medium title font black--text">{{ name }}</v-list-item-title>
+                    <span class="font black--text">{{last_name}}</span>
+                </v-list-item-content>
+                <v-btn icon @click="drawer = !drawer">
+                <v-icon class="color-c" size=40>mdi-chevron-left</v-icon>
+                </v-btn>           
+          </v-list-item>
+        </template>
+           <v-divider class="grey darken-1 "></v-divider>
+          <v-list shaped>
+          <v-list-item-group  v-model="items" class="link">
+              <v-list-item  class="link black--text" v-for="item in items" :key="item.title" router :to="item.to" min-width="2" >
+                  <v-list-item-icon>
+                      <v-icon medium class="link black--text" size=25>{{ item.icon }}</v-icon>
+                  </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title class="font-weight-medium subtitle-1 link font black--text">{{ item.title }}</v-list-item-title>
+                  </v-list-item-content>
+              </v-list-item>
+              <v-divider class="grey darken-1 "></v-divider>
+               <v-btn  v-if="isLoggedIn" v-bind:to="{ name: 'logout' }"  small class="ma-2 link indigo--text" tile text>
+                 <v-icon color="black" left>mdi-power</v-icon> <span class="font black--text">Cerrar Sesión</span>
+               </v-btn>
+              </v-list-item-group> 
+          </v-list>
+      </v-navigation-drawer>
+    <BottomNavigation/> 
+    <v-container class="bottom">
+      <v-row  class="mb-6"  no-gutters>
+      <v-col  sm="5" md="6">
+        <v-card class="transparent"  outlined tile>
+          <span class="title font-weight-bold ma-2 font indigo--text">{{ company.name }}</span><v-icon size=40 style="position: absolute;" color="black">mdi-stadium</v-icon><br>
+          <span class="body-2 font-weight-bold ma-2 font "> {{ company.address}}</span><br>
+           <span class="body-2 ma-2 font font-weight-bold">
+            <v-icon color="black" size="15" class="body-2 font link">mdi-map-marker</v-icon>{{ company.town.name}}, {{ company.town.department.name }}
+          </span>
+        </v-card>
+      </v-col>
+      <v-col sm="5" offset-sm="2" md="6" offset-md="0">
+        <v-card  class=" transparent " outlined>
+          <v-row justify="center"> 
+          <v-hover>
+            <v-card :elevation=12  width=125 heigth=75 style="border-radius: 10px;">
+                <v-img  :src="company.image"  alt="Image" width=125  height=75>
+                </v-img>
+        </v-card>
+             <!-- <v-icon :elevation=10 size=85 color="black">mdi-stadium</v-icon>-->
+          </v-hover>
           </v-row>
-      <v-icon color="amber lighten-5" size="35" class="my-2">mdi-soccer</v-icon>
-    </v-app-bar>
-    <v-container class="bottom amber lighten-5">
-    <v-row justify="space-around">
-      <div class="col-md-4 pa-1">
-        <v-img class="text-left ma-4 my-1" :src="company.image" height="150"  style="border-radius: 10px;" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.9)">
-          <v-icon color="white" size="25" class="ma-3">mdi-bookmark-outline</v-icon> 
-        </v-img>
-      <v-card-actions>
-        <v-row justify="left" no-gutters>
-          <div class="ma-2">
-            <v-icon color="black" size="15" class="caption">mdi-map-marker</v-icon><span class="subtitle-2 ma-2 font">{{ company.name }}, {{ company.address }}- {{ company.town.name }}, {{ company.town.department.name}}</span>
-          </div> 
-        </v-row>
-      </v-card-actions>
-      </div>
+        </v-card>
+      </v-col>
     </v-row>
-      <v-slide-group style="top: -1em;">
-        <v-slide-item v-for="(image, index) in images" :key="index" v-slot:default="{ active, toggle }">
-          <v-card :color="active ? 'primary' : 'grey lighten-1'" class="ma-2" height="100" width="200" @click="toggle">
-            <v-img :src="image.src" class="text-right" height="100" width="200" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.9)">
-              <v-icon color="white" size="25" class="ma-2">mdi-bookmark-outline</v-icon> 
-            </v-img>
-          </v-card>
-        </v-slide-item>
-      </v-slide-group>
+ 
       <v-divider></v-divider>
-      <v-carousel cycle height="260" interval=3000 delimiter-icon="mdi-minus">
-        <v-carousel-item v-for="(field, i ) in company.fields" :key="i"> 
-          <v-hover >
-            <v-row justify="center" v-if="field.quantity==0">
-            <v-card width="275" v-bind:to=" '/field/' +field.id+'/reservar' "  disabled height="200" class="ma-2 indigo lighten-5 link" :elevation=6 style="border-radius:">
-              <v-img class="white--text " height="200" src="https://img.freepik.com/foto-gratis/representacion-3d-balon-futbol-linea-campo-futbol_41667-276.jpg?size=626&ext=jpg" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.9)">
-              <v-card-title style="position: absolute; top: -0.5em; left: -0.5em;" class="font">Cancha {{ field.name }}</v-card-title>
-                <v-row class="fill-height" align="center" justify="center">                       
-                  <v-chip label outlined dark color="white" class="headline font-weight-bold font link"> Reservar <v-icon right>mdi-calendar-clock</v-icon></v-chip>
+      <span class=" font-weight-bold headline font indigo--text ma-3">Elije una de las canchas</span>
+      
+      <v-row dense class="ma-2">
+        <v-col v-for="(field, i) in company.fields" :key="i" cols="12">
+          <v-hover>
+          <v-card class="card-color link my-1" :elevation=12  dark v-bind:to=" '/field/' +field.id+'/reservar'" style="border-radius: 10px 10px 10px 10px;">
+            <div class="d-flex flex-no-wrap justify-space-between">
+              <div>
+                <v-card-title ><span class="headline font">Cancha {{ field.name }}</span> </v-card-title>
+                <v-card-subtitle>
+                  <span v-if="field.type == 1" class="body-1 font-weight-bold font">Fútbol 5</span>
+                  <span v-else-if="field.type == 2" class="body-1 font-weight-bold font">Fútbol 7</span>
+                  <span v-else class="body-1 font-weight-bold font">Fútbol 11</span>          
+                </v-card-subtitle>
+              </div>
+                <v-img  class="shrink ma-2" contain src="https://img.freepik.com/foto-gratis/representacion-3d-balon-futbol-linea-campo-futbol_41667-276.jpg?size=626&ext=jpg" style="border-radius:  10px 10px 10px 10px; flex-basis: 125px;" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.5)">
+                <v-row class="fill-height" align="center" justify="center">
+                <div class="headline"><span class="font">Q{{ field.price }}.00</span><br>
+                </div>
               </v-row>
-                  <v-card-subtitle style="position: absolute; top: 7.5em;" class="font font-weight-bold">Sin horarios <v-icon >mdi-emoticon-sad-outline</v-icon></v-card-subtitle>
-                    <v-card-title style="position: absolute; bottom: 1.2em;">
-                      <span v-if="field.type == 1" class="caption font-weight-bold font">5 Jugadores</span>
-                      <span v-else-if="field.type == 2" class="caption font-weight-bold font">7 Jugadores</span>
-                      <span v-else class="caption font-weight-bold font">11 Jugadores</span>                              
-                  </v-card-title>
-                  <v-chip small label dark class="ma-2 font-weight-bold back-ground font" style="bottom: 4em;">Q.{{ field.price }}</v-chip>
-              </v-img>                               
-            </v-card>
-            </v-row>
-             <v-row justify="center" v-else>
-            <v-card width="275" v-bind:to=" '/field/' +field.id+'/reservar' "   height="200" class="ma-2 indigo lighten-5 link" :elevation=6 style="border-radius:">
-              <v-img class="white--text " height="200" src="https://img.freepik.com/foto-gratis/representacion-3d-balon-futbol-linea-campo-futbol_41667-276.jpg?size=626&ext=jpg" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.9)">
-              <v-card-title style="position: absolute; top: -0.5em; left: -0.5em;" class="font">Cancha {{ field.name }}</v-card-title>
-                <v-row class="fill-height" align="center" justify="center">                       
-                  <v-chip label outlined dark color="white" class="headline font-weight-bold font link"> Reservar <v-icon right>mdi-calendar-clock</v-icon></v-chip>
-              </v-row>
-                  <v-card-subtitle style="position: absolute; top: 7.5em;" class="font font-weight-bold">Horarios disponibles: {{ field.quantity }}</v-card-subtitle>
-                    <v-card-title style="position: absolute; bottom: 1.2em;">
-                      <span v-if="field.type == 1" class="caption font-weight-bold font">5 Jugadores</span>
-                      <span v-else-if="field.type == 2" class="caption font-weight-bold font">7 Jugadores</span>
-                      <span v-else class="caption font-weight-bold font">11 Jugadores</span>                              
-                  </v-card-title>
-                  <v-chip small label dark class="ma-2 font-weight-bold back-ground font" style="bottom: 4em;">Q.{{ field.price }}</v-chip>
-              </v-img>                               
-            </v-card>
-            </v-row>
-          </v-hover>          
-        </v-carousel-item>
-      </v-carousel>
+                </v-img>
+            </div>
+              <v-divider dark></v-divider>
+    <v-card-actions class="">
+      <v-chip style="bottom: 1em;" small class="light-green accent-4 font-weight-bold font" dark>Destacada</v-chip>      
+      <v-spacer></v-spacer>
+      <v-rating style="bottom: 1em;"
+        readonly
+        v-model="rating"
+        background-color="white"
+        color="yellow accent-4"
+        dense
+        half-increments
+        size="18"
+      ></v-rating>
+    </v-card-actions>
+          </v-card>
+          </v-hover>
+        </v-col>
+      </v-row>
     </v-container>
   </v-container>
 </template>
@@ -99,6 +132,32 @@ export default {
       companyId: this.$route.params.companyId,
       company: [],
       field: [],
+       user_reservation_today: [ ],
+      user_today_reservation:[ ],
+      user_name: '',
+      slide: 'first',
+      name: '',
+      rating: 4.3,
+      last_name: '',
+      drawer: false, 
+      itemss: [
+        {
+          color: '#1F7087',
+          src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
+          title: 'Supermodel',
+          artist: 'Foster the People',
+        },
+        {
+          color: '#952175',
+          src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
+          title: 'Halcyon Days',
+          artist: 'Ellie Goulding',
+        },
+      ],
+      items : [
+              {title: 'Inicio', icon: 'mdi-home', to  : '/home'},
+              {title: 'Mis Reservaciones', icon: 'mdi-calendar', to: '/account'},
+          ],
       months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
       dayss: ['Dom', 'Lun', 'Ma', 'Mie', 'Jue', 'Vie', 'Sab',],
       images: [
@@ -116,6 +175,11 @@ export default {
       ],
       }
   },
+  computed: {
+    isLoggedIn (){
+      return this.$store.getters.isLoggedIn
+    }
+   }, 
     methods: {
        getCompany() {
         const path = `https://api-backend-canchas.herokuapp.com/api/field-company/${this.companyId}/`
@@ -130,9 +194,24 @@ export default {
         console.log(this.field);
       })
       },
+      getUser(){
+        axios.get(URL+'api/user-reservation-today/').then((response)=>{
+          this.user_reservation_today = response.data
+          let find_user = this.user_reservation_today.find (v => v.id == this.$store.state.user)
+          this.user_today_reservation = find_user
+          this.user_name = find_user.username
+          this.name = find_user.first_name
+          this.last_name = find_user.last_name
+          //console.log(this.user_today_reservation);
+          //console.log(this.user_name);
+          //console.log(this.name);
+          //console.log(this.user_reservation_today);
+        })
+      }
     },
     created(){
-      this.getCompany()
+      this.getCompany(),
+      this.getUser()
     },
     /*created(){
       this.getDate()
@@ -155,7 +234,7 @@ export default {
    }
    .bottom {
     padding-bottom: 70px;
-     margin-top: 10px;
+     margin-top: 0px;
      padding-right: 0px;
      padding-left: 0px;
      border-radius: 25px 25px 0px 0px;
@@ -165,5 +244,8 @@ export default {
   }
   .font-color {
     color: #011427 !important;
+  }
+  .card-color {
+    background-color:  #154360;
   }
 </style>

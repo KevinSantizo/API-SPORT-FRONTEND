@@ -1,25 +1,55 @@
 <template>
-    <v-container class="overflow-hidden mx-auto back-ground"  style="padding-left: 3px; padding-right: 3px;">
-        <v-app-bar extended app flat text  class="back-ground">
-          <v-layout row wrap>
-            <v-flex xs12 md12>
-                <div class="my-2" style="position: absolute;">
-                <v-btn icon class="link" style="color: transparent;" router to="/companies">
-                <v-icon color="amber lighten-5" dark size="45" class="link" >mdi-chevron-left</v-icon>
-                </v-btn>
-              </div>
-              <v-row justify="center" align="center">
-                <v-icon color="amber lighten-5" size="25">mdi-calendar</v-icon><v-divider inset vertical class="mx-1"></v-divider><span class="font-weight-bold caption font white--text"> {{ this.dayss[new Date().getDay() ]}}, {{  this.months[new Date().getMonth()] }} - {{ new Date().getDate()}} | {{ new Date().getFullYear() }}</span>
-              </v-row>
-            </v-flex>
-          </v-layout>
-          <v-divider inset class="transparent" vertical></v-divider>
-                <v-icon color="amber lighten-5" size="35" class="my-2">mdi-soccer</v-icon>
+    <v-container class="overflow-hidden mx-auto"  style="padding-left: 3px; padding-right: 3px;">
+        <v-app-bar  class="white" text height=85 app>
+              <v-app-bar-nav-icon color="black" x-large @click="drawer = !drawer"></v-app-bar-nav-icon>
+                <v-row justify="center">
+                  <div class="ma-7">
+                    <v-icon color="black" size="25">mdi-calendar</v-icon><v-divider inset vertical class="mx-1"></v-divider><span class="font-weight-bold caption font" > {{ this.dayss[new Date().getDay() ]}}, {{  this.months[new Date().getMonth()] }} - {{ new Date().getDate()}} | {{ new Date().getFullYear() }}</span>
+                  </div>
+                  <v-divider inset vertical class="transparent mx-4"></v-divider>
+                    <v-icon color="black" size="35" class="my-2 ">mdi-soccer</v-icon>
+                </v-row>
         </v-app-bar>
-    <v-container class="bottom amber lighten-5" style="border-radius: 25px 25px 0px 0px;">
+     <v-navigation-drawer dense dark app v-model="drawer"  temporary class="grey lighten-2" style="border-radius: 0px 35px 35px 0px;">
+      <template v-slot:prepend>
+          <v-list-item> 
+              <v-avatar class="profile my-5"  size="75"> 
+                    <img src="https://static.platzi.com/static/website/v2/images/avatar_default.afdd5b436fc2.png" alt="">
+                </v-avatar> 
+                <v-divider inset vertical class="mx-2 transparent"> 
+                </v-divider> 
+                <v-list-item-content>
+                    <v-list-item-title  class="font-weight-medium title font black--text">{{ name }}</v-list-item-title>
+                    <span class="font black--text">{{last_name}}</span>
+                </v-list-item-content>
+                <v-btn icon @click="drawer = !drawer">
+                <v-icon class="color-c" size=40>mdi-chevron-left</v-icon>
+                </v-btn>           
+          </v-list-item>
+        </template>
+           <v-divider class="grey darken-1 "></v-divider>
+          <v-list shaped>
+          <v-list-item-group  v-model="items" class="link">
+              <v-list-item  class="link black--text" v-for="item in items" :key="item.title" router :to="item.to" min-width="2" >
+                  <v-list-item-icon>
+                      <v-icon medium class="link black--text" size=25>{{ item.icon }}</v-icon>
+                  </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title class="font-weight-medium subtitle-1 link font black--text">{{ item.title }}</v-list-item-title>
+                  </v-list-item-content>
+              </v-list-item>
+              <v-divider class="grey darken-1 "></v-divider>
+               <v-btn  v-if="isLoggedIn" v-bind:to="{ name: 'logout' }"  small class="ma-2 link indigo--text" tile text>
+                 <v-icon color="black" left>mdi-power</v-icon> <span class="font black--text">Cerrar Sesión</span>
+               </v-btn>
+              </v-list-item-group> 
+          </v-list>
+      </v-navigation-drawer>
+            <BottomNavigation/>
+    <v-container class="bottom " style="border-radius: 25px 25px 0px 0px;">
             <v-row justify="center">
                 <v-hover>
-                <v-card  width="375"  class="amber lighten-5"  style="border-radius: 10px;">
+                <v-card  width="375"  class=""  style="border-radius: 10px;">
                     <v-img :src="this.company.image" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.6)">
                         <div style="position: absolute; right: 0em;">
                             <v-icon color="amber lighten-5" size="25" class="ma-2">mdi-bookmark-outline</v-icon> 
@@ -41,10 +71,10 @@
                 </v-row>
                 <v-divider></v-divider>
             <v-hover>
-            <v-card class="mx-auto overflow-hidden my-2 ma-2 amber lighten-5" style="max-width: 600px; border: 1px solid white; border-radius: 10px;">
+            <v-card class="mx-auto overflow-hidden my-2 ma-2" style="max-width: 600px; border: 1px solid white; border-radius: 10px;">
                 <v-slide-group>
                     <v-slide-item v-for="image in images" :key="image.id" :image="image">
-                        <v-card class="ma-2" height="100" width="200" @click="toggle">
+                        <v-card class="ma-2" height="100" width="200" >
                             <v-img :src="image.src" class="text-right" height="100" width="200" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.3)">
                             <v-icon color="amber lighten-5" size="25" class="ma-2">mdi-bookmark-outline</v-icon> 
                             </v-img>
@@ -134,12 +164,28 @@
 
 <script>
 import axios from 'axios'
+import BottomNavigation from '@/components/BottomNavigation'
+
 let URL =  'https://api-backend-canchas.herokuapp.com/'
 export default {
+     components: {
+    BottomNavigation
+  },
+
     data () {
        return {
         companyId: this.$route.params.companyId,
         company: [],
+         user_name: '',
+      slide: 'first',
+      name: '',
+      rating: 4.3,
+      last_name: '',
+      drawer: false, 
+       items : [
+                {title: 'Inicio', icon: 'mdi-home', to  : '/home'},
+                {title: 'Mis Reservaciones', icon: 'mdi-calendar', to: '/account'},
+            ],
         months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
         dayss: ['Dom', 'Lun', 'Ma', 'Mie', 'Jue', 'Vie', 'Sab',],
         images: [
@@ -179,7 +225,23 @@ export default {
        return this.$store.getters.isLoggedIn
    }
 },
+ created(){
+      this.getUser()
+    },
     methods: {
+        getUser(){
+        axios.get(URL+'api/user-reservation-today/').then((response)=>{
+          this.users = response.data
+          let find_user = this.users.find (v => v.id == this.$store.state.user)
+          this.user_name = find_user.username
+          this.name = find_user.first_name
+          this.last_name = find_user.last_name
+          //console.log(this.user_today_reservation);
+          console.log(this.user_name);
+          //console.log(this.name);
+          //console.log(this.user_reservation_today);
+        })
+      },
         validate () {
         if (this.$refs.form.validate()) {
           this.snackbar = true
@@ -200,7 +262,8 @@ export default {
         this.company = response.data
         //console.log(this.company);
       })
-    }
+    },
+    
 }
 </script>
 

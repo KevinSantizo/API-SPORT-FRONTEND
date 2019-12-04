@@ -1,33 +1,33 @@
 <template>
-  <v-container class="overflow-hidden mx-auto back-ground" style="padding-left: 0px; padding-right: 0px;">
-    <v-app-bar extended app flat text  class="back-ground" dark>
+  <v-container class="overflow-hidden mx-auto" style="padding-left: 0px; padding-right: 0px;">
+    <v-app-bar text  class="white" height="85" app>
       <v-layout row wrap>
         <div class="my-2" style="position: absolute;">
           <v-btn icon class="link" v-bind:to=" '/do_reserve/'+field.company.id+ '/reserve' ">
-            <v-icon color="amber lighten-5" dark size="45">mdi-chevron-left</v-icon>
+            <v-icon color="black" dark size="45">mdi-chevron-left</v-icon>
           </v-btn>
         </div>
         <v-row justify="center" align="center" >
-          <span class="font-weight-bold font" >Reservar</span>
+          <span class="font-weight-bold font headline" >Reservar</span>
         </v-row>
         <v-flex xs12 md12>
           <v-row justify="center" align="center">
-            <v-icon color="amber lighten-5" size="25">mdi-calendar</v-icon><v-divider inset vertical class="mx-1"></v-divider><span class="font-weight-bold caption font" > {{ this.dayss[new Date().getDay() ]}}, {{  this.months[new Date().getMonth()] }} - {{ new Date().getDate()}} | {{ new Date().getFullYear() }}</span>
+            <v-icon color="black" size="25">mdi-calendar</v-icon><v-divider inset vertical class="mx-1"></v-divider><span class="font-weight-bold caption font" > {{ this.dayss[new Date().getDay() ]}}, {{  this.months[new Date().getMonth()] }} - {{ new Date().getDate()}} | {{ new Date().getFullYear() }}</span>
           </v-row>
         </v-flex>
       </v-layout>
         <v-divider inset class="transparent" vertical></v-divider>
-        <v-icon color="amber lighten-5" size="35" class="my-2">mdi-soccer</v-icon>
+        <v-icon color="black" size="35" class="my-2">mdi-soccer</v-icon>
     </v-app-bar>
-    <v-container class="bottom amber lighten-5" style="border-radius: 25px 25px 0px 0px;" >
+    <v-container class="bottom">
       <form  @submit.prevent="reservation">
         <v-hover>
-          <v-card :elevation=12 style="border-radius: 5px;" class="amber lighten-5 my-8">
+          <v-card :elevation=12 style="border-radius: 5px;" class="my-7">
             <v-card-title class="back-ground">
               <v-row justify="center">
-                <span class="white--text title font" v-if="field.type == 1">Cancha {{ field.name }} de 5 Jugadores </span>
-                <span class="white--text title font" v-else-if="field.type == 2">Cancha {{ field.name }} de 7 Jugadores </span>
-                <span class="white--text title font" v-else>Cancha {{ field.name }} de 11 Jugadores </span>
+                <span class="white--text title font" v-if="field.type == 1">Cancha {{ field.name }} Fútbol 5 </span>
+                <span class="white--text title font" v-else-if="field.type == 2">Cancha {{ field.name }} Fútbol 7 </span>
+                <span class="white--text title font" v-else>Cancha {{ field.name }} Fútbol 11 </span>
               </v-row>
             </v-card-title>
           <v-card-text>
@@ -39,12 +39,10 @@
                     <input type="hidden"   :id="field.id" name="field_reserve"   v-model="this.form.field_reserve" >
               </div>
            </v-row>  
-        <div class="form-group">
         <label for="date" class="font subtitle-1 color-c" >Fecha:</label>
-          <input type="date" name="schedule_date" style="border: 2px solid #011427 !important;" v-model="form.schedule_date" class="form-control amber lighten-5 color-c" id="date" >
-        </div>   
+          <v-text-field type="date"  dense v-model="this.form.schedule_date" class="font" outlined></v-text-field>
           <v-hover >
-            <v-card max-width="100%" height=100 color="back-ground" >
+            <v-card max-width="100%" height=100 color="back-ground">
               <v-card-text>
                 <v-row justify="center">
                   <div class="subtitle-1 white--text font-weight-medium font">Horarios</div>
@@ -100,9 +98,9 @@
       </v-card>
       </v-hover>
       </form>
-      <v-row justify="center" class="my-6">
-         <v-card class="profile" width=300 heigth=150 style="border-radius: 10px;">
-                <v-img  :src="field.company.image"  alt="Image" width=300  height=150 >
+      <v-row justify="center">
+         <v-card class="profile" width=125 heigth=75 style="border-radius: 10px;">
+                <v-img  :src="field.company.image"  alt="Image" width=125 heigth=75>
                 </v-img>
         </v-card>
       </v-row>
@@ -215,9 +213,10 @@ export default {
         let find_user = this.users.find (v => v.id == this.$store.state.user)
         this.user_name = find_user.username
         this.form.customer_reserve = find_user.id    
-        var today = new Date();
+        var today = new Date(); 
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         this.form.schedule_date = date   
+        console.log(this.form.schedule_date);
       })
     },
 },
@@ -243,7 +242,7 @@ export default {
      margin-top:  0.2em;
    }
    .bottom {
-     margin-bottom:  0px;
+     margin-top: -40px;
    }
  .back-ground {
     background-color: #011427;

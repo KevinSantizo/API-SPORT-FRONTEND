@@ -1,74 +1,108 @@
 <template>
-    <v-container class="overflow-hidden mx-auto back-ground">
-        <v-app-bar extended app flat text   class="back-ground"  dark >
-          <div class="ma-3">
-                <v-icon color="amber lighten-5" size="25">mdi-calendar</v-icon><v-divider inset vertical class="mx-1"></v-divider><span class="font-weight-bold caption font" > {{ this.dayss[new Date().getDay() ]}}, {{  this.months[new Date().getMonth()] }} - {{ new Date().getDate()}} | {{ new Date().getFullYear() }}</span>
-         </div>
-          <v-spacer ></v-spacer>
-                <v-icon color="amber lighten-5" size="35" class="my-2">mdi-soccer</v-icon>
-               <v-toolbar-title class="font font-weight-medium" style="top: 3em;  position: absolute;">Explorar</v-toolbar-title>
+    <v-container class="overflow-hidden mx-auto " style="padding-right: 0px; padding-left: 0px;">
+      <v-app-bar  class="white" text height=85 app>
+              <v-app-bar-nav-icon color="black" x-large @click="drawer = !drawer"></v-app-bar-nav-icon>
+                <v-row justify="center">
+                  <div class="ma-7">
+                    <v-icon color="black" size="25">mdi-calendar</v-icon><v-divider inset vertical class="mx-1"></v-divider><span class="font-weight-bold caption font" > {{ this.dayss[new Date().getDay() ]}}, {{  this.months[new Date().getMonth()] }} - {{ new Date().getDate()}} | {{ new Date().getFullYear() }}</span>
+                  </div>
+                  <v-divider inset vertical class="transparent mx-4"></v-divider>
+                    <v-icon color="black" size="35" class="my-2 ">mdi-soccer</v-icon>
+                </v-row>
         </v-app-bar>
+        <v-navigation-drawer dense dark app v-model="drawer"  temporary class="grey lighten-2" style="border-radius: 0px 35px 35px 0px;">
+      <template v-slot:prepend>
+          <v-list-item> 
+              <v-avatar class="profile my-5"  size="75"> 
+                    <img src="https://static.platzi.com/static/website/v2/images/avatar_default.afdd5b436fc2.png" alt="">
+                </v-avatar> 
+                <v-divider inset vertical class="mx-2 transparent"> 
+                </v-divider> 
+                <v-list-item-content>
+                    <v-list-item-title  class="font-weight-medium title font black--text">{{ name }}</v-list-item-title>
+                    <span class="font black--text">{{last_name}}</span>
+                </v-list-item-content>
+                <v-btn icon @click="drawer = !drawer">
+                <v-icon class="color-c" size=40>mdi-chevron-left</v-icon>
+                </v-btn>           
+          </v-list-item>
+        </template>
+           <v-divider class="grey darken-1 "></v-divider>
+          <v-list shaped>
+          <v-list-item-group  v-model="items" class="link">
+              <v-list-item  class="link black--text" v-for="item in items" :key="item.title" router :to="item.to" min-width="2" >
+                  <v-list-item-icon>
+                      <v-icon medium class="link black--text" size=25>{{ item.icon }}</v-icon>
+                  </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title class="font-weight-medium subtitle-1 link font black--text">{{ item.title }}</v-list-item-title>
+                  </v-list-item-content>
+              </v-list-item>
+              <v-divider class="grey darken-1 "></v-divider>
+               <v-btn  v-if="isLoggedIn" v-bind:to="{ name: 'logout' }"  small class="ma-2 link indigo--text" tile text>
+                 <v-icon color="black" left>mdi-power</v-icon> <span class="font black--text">Cerrar Sesión</span>
+               </v-btn>
+              </v-list-item-group> 
+          </v-list>
+      </v-navigation-drawer>
       <BottomNavigation/>  
-        <v-container class="bottom amber lighten-5" style="border-radius: 25px 25px 0px 0px;">
-            <v-item-group> 
+        <v-container class="bottom">
+        <span class=" font-weight-bold headline font  color-c ma-3 my-4">Reserva en cualquier lugar</span>
+          <v-divider class="grey mx-2"></v-divider>
+          <v-item-group class="ma-1"> 
             <v-row justify-space-around>
             <v-col  v-for="(company, index) in companies" :key="index" cols="12" md="4"> 
                 <v-hover >
-                  <v-card :elevation=12  style="border-radius: 10px;" class="amber lighten-5" v-if="company.fields.length == 0" disabled>
-                    <v-img :src="company.image" height="150px" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.9)">
+                  <v-card :elevation=12  style="border-radius: 10px;" class="link light-green lighten-5"  v-if="company.fields.length == 0" disabled>
+                    <v-img :src="company.image" style="border-radius: 10px 10px 35px 35px;" height="150px" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.9)">
                     </v-img>
-                    <v-footer class="amber lighten-5"  padless>
                       <v-row  no-gutters>
                         <v-col >
                         <div>
-                          <span class="caption ma-2 font ">{{ company.name }} {{ company.address}}</span>
+                          <span class="title ma-2 font ">{{ company.name }}</span><br>
+                          <span class="body-2 ma-2 font "> {{ company.address}}</span>
                         </div> 
-                            <span class="caption ma-2">
-                              <v-icon color="black" size="15" class="caption font">mdi-map-marker</v-icon>{{ company.town.name}}, {{ company.town.department.name }}
+                            <span class="body-2 ma-2">
+                              <v-icon color="black" size="15" class="body-2 font">mdi-map-marker</v-icon>{{ company.town.name}}, {{ company.town.department.name }}
                             </span>
                             </v-col>
-                      </v-row>
-                    </v-footer>
-                    <v-card-actions class="amber lighten-5">
+                    <v-card-actions class="">
                       <div class="reserve link" v-if="company.fields.length == 0" outlined >
                         <v-row  class="ma-1">
                           <div >
-                            <v-chip outlined label class=" ma-1" disabled color="red" >Sin canchas <v-icon right small>mdi-close-box</v-icon></v-chip>                          
+                            <v-chip outlined rounded  class=" ma-1" disabled color="red" >Sin canchas <v-icon right >mdi-emoticon-sad-outline</v-icon></v-chip>                          
                           </div>
-                          <v-spacer></v-spacer>
-                            <v-btn text small class="link font-weight-bold font-color font my-1" disabled>Ver canchas<v-icon  size=20>mdi-stadium</v-icon>
-                            </v-btn>
                         </v-row>
                       </div>
                     </v-card-actions>
+                    </v-row>
                   </v-card>
-                  <v-card :elevation=12  style="border-radius: 10px;" class="amber lighten-5 link" v-else v-bind:to=" '/do_reserve/'+company.id+ '/reserve'">
-                    <v-img :src="company.image" height="150px" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.9)">
+                  <v-card :elevation=12  style="border-radius: 10px;" class="link light-green lighten-5" v-else v-bind:to=" '/do_reserve/'+company.id+ '/reserve'">
+                    <v-img :src="company.image" style="border-radius: 10px 10px 35px 35px;" height="175px" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.9)">
                     </v-img>
-                    <v-footer class="amber lighten-5 link" padless>
-                      <v-row  no-gutters>
-                        <v-col >
+                      <v-row  no-gutters >
+                        <v-col>
                         <div>
-                          <span class="caption ma-2 font  link">{{ company.name }} {{ company.address}}</span>
+                          <span class="title ma-2 font ">{{ company.name }}</span><br>
+                          <span class="body-2 ma-2 font "> {{ company.address}}</span>    
                         </div> 
-                            <span class="caption ma-2">
-                              <v-icon color="black" size="15" class="caption font link">mdi-map-marker</v-icon>{{ company.town.name}}, {{ company.town.department.name }}
+                            <span class="body-2 ma-2 font">
+                              <v-icon color="black" size="15" class="body-2 font link">mdi-map-marker</v-icon>{{ company.town.name}}, {{ company.town.department.name }}
                             </span>
-                            </v-col>
-                      </v-row>
-                    </v-footer >
-                    <v-card-actions class="amber lighten-5">
-                      <v-btn class="reserve link color-c" v-bind:to=" '/do_reserve/'+company.id+ '/reserve'" outlined>
+                          </v-col>
+                    <v-card-actions>
                         <v-row  class="ma-1">
                           <div class="my-1">
-                            <span class="font-weight-bold color-c font-color font link">Canchas: {{ company.fields.length }}</span><br>
-                          </div>
-                          <v-spacer></v-spacer>
-                            <span text small v-bind:to=" '/do_reserve/'+company.id+ '/reserve' " class="link font-weight-bold font-color font my-1" >Ver canchas<v-icon  size=20>mdi-stadium</v-icon>
+                            <span class="subtitle-1 font-weight-bold color-c font-color font link">Canchas {{ company.fields.length }}</span><br>
+                          <span text small v-bind:to=" '/do_reserve/'+company.id+ '/reserve' " class="link font-weight-bold font-color font my-1 ma-9" ><v-icon  size=25>mdi-stadium</v-icon>
                             </span>
+                          </div>
+                            <!--<span text small v-bind:to=" '/do_reserve/'+company.id+ '/reserve' " class="link font-weight-bold font-color font my-1" >Ver canchas<v-icon  size=20>mdi-stadium</v-icon>
+                            </span>-->
                         </v-row>
                       </v-btn>
                     </v-card-actions>
+                    </v-row>
                   </v-card>
                 </v-hover>
             </v-col>
@@ -89,16 +123,30 @@ export default {
     return {
         reservations: [ ] ,
         companies: [ ],
+        users: [ ],
         show: false,
         months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
         dayss: ['Dom', 'Lun', 'Ma', 'Mie', 'Jue', 'Vie', 'Sab',],
         activeBtn: 1,
         showNav: true,
-        }
+        user_name: '',
+        name: '',
+        last_name: '',
+        drawer: false, 
+        items : [
+                {title: 'Inicio', icon: 'mdi-home', to  : '/home'},
+                {title: 'Mis Reservaciones', icon: 'mdi-calendar', to: '/account'},
+            ],
+          }
     },
      components: {
     BottomNavigation
   },
+   computed: {
+    isLoggedIn (){
+      return this.$store.getters.isLoggedIn
+    }
+   }, 
     methods: {
       getCompanies() {
       const path = URL+'api/field-company/'
@@ -108,9 +156,23 @@ export default {
         //console.log(response.data);
       })
       },
+            getUser(){
+        axios.get(URL+'api/user-reservation-today/').then((response)=>{
+          this.users = response.data
+          let find_user = this.users.find (v => v.id == this.$store.state.user)
+          this.user_name = find_user.username
+          this.name = find_user.first_name
+          this.last_name = find_user.last_name
+          //console.log(this.user_today_reservation);
+          console.log(this.user_name);
+          //console.log(this.name);
+          //console.log(this.user_reservation_today);
+        })
+      }
     },
     created(){
-      this.getCompanies()
+      this.getCompanies(),
+      this.getUser()
     },
     /*created(){
       this.getDate()
@@ -168,8 +230,9 @@ export default {
      margin-top:  0.2em;
    }
    .bottom {
-     padding-bottom: 70px;
+     padding-bottom: 50px;
      padding-right: 0px;
+     margin-top: -15px;
      padding-left: 0px;
    }
    .container {
