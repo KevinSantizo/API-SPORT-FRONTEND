@@ -49,7 +49,7 @@
         <v-container class="bottom">
         <span class=" font-weight-bold headline font  color-c ma-3 my-4">Reserva en cualquier lugarr</span>
           <v-divider class="grey mx-2"></v-divider>
-            <v-row  justify="space-around" class="ma-1">
+            <v-row  justify="center" class="ma-1">
             <v-col  v-for="(company, index) in companies" :key="index"> 
                 <v-hover >
                   <v-card :elevation=12  style="border-radius: 10px;" class="link light-green ma-2 lighten-5"  max-width="300"   v-if="company.fields.length == 0" disabled>
