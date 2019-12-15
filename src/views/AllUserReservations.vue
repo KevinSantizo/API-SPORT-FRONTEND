@@ -54,7 +54,7 @@
           <v-divider></v-divider>
           <v-row justify="center">
              <v-hover v-for="(reservation, i) in this.user_reservations.reservations" :key="i">
-               <v-card class="mx-auto ma-1" outlined>
+               <v-card class="mx-auto ma-1 " :elevation="8" max-width="300" outlined>
                     <v-list-item three-line>
                     <v-list-item-content>
                         <div class="headline font-weight-bold mb-4">{{reservation.field_reserve.company.name}}</div>
