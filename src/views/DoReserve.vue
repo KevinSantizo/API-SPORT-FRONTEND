@@ -75,10 +75,10 @@
       <v-divider></v-divider>
       <span class=" font-weight-bold headline font indigo--text ma-3">Elije una de las canchas</span>
       
-      <v-row dense class="ma-2">
-        <v-col v-for="(field, i) in company.fields" :key="i" cols="12">
+      <v-row justify="space-around" class="ma-1">
+        <v-col v-for="(field, i) in company.fields" :key="i">
           <v-hover>
-          <v-card class="card-color link my-1" :elevation=12  dark v-bind:to=" '/field/' +field.id+'/reservar'" style="border-radius: 10px 10px 10px 10px;">
+          <v-card class="card-color link my-1" :elevation=12 max-width="325" max-height="200"  dark v-bind:to=" '/field/' +field.id+'/reservar'" style="border-radius: 10px 10px 10px 10px;">
             <div class="d-flex flex-no-wrap justify-space-between">
               <div>
                 <v-card-title ><span class="headline font">Cancha {{ field.name }}</span> </v-card-title>

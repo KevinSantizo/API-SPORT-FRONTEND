@@ -63,14 +63,13 @@
             </v-img>                               
           </v-carousel-item>
         </v-carousel>
-        <span class=" font-weight-bold headline font indigo--text"> Haz tus reservaciones</span>
-        <v-row no-gutters justify="space-around">
-          <v-col sm="5" md="6">
+          <v-col sm="12" md="6">
+        <v-row justify="center">
           <v-hover>
               <v-card  router to="/reserve" class="my-1 link "  style="border-radius: 10px; background-color: #DF2935 !important;" dark width=375 height=200 :elevation=12>
               <v-row class="fill-height pa-4 ma-2" align="center" justify="center">  
                 <div  class="headline font-weight-bold font">
-                  <span text class="font" >Reservar</span><br>
+                  <span text class="font" >Reservar </span><br>
                   <v-row justify="center">
                   <span><v-icon right size=40 >mdi-calendar</v-icon></span>  
                   </v-row>
@@ -81,8 +80,10 @@
               </v-row>
               </v-card>
           </v-hover>
+          </v-row>
           </v-col>
-          <v-col sm="5" md="6">
+          <v-col  sm="12" md="6">
+        <v-row justify="center">
           <v-hover>
             <v-card  router to="/companies" class="my-1 link ma-1 "  style="border-radius: 10px; background-color: #004E64" dark width=375 height=200 :elevation=12>
               <v-row class="fill-height pa-4 ma-2" align="center" justify="center">  
@@ -95,8 +96,8 @@
               </v-row>                    
             </v-card>
           </v-hover>
-          </v-col>
           </v-row>
+          </v-col>
          <!-- <v-hover>
             <v-card class=" link my-1 ma-1 "  style="border-radius: 10px; background-color: #0EB588;" dark width=375 height=200 :elevation=12>
               <v-avatar size=90 class="ma-1"  style="position: absolute;">

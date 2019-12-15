@@ -22,7 +22,7 @@
     <v-container class="bottom">
       <form  @submit.prevent="reservation">
         <v-hover>
-          <v-card :elevation=12 style="border-radius: 5px;" class="my-7">
+          <v-card :elevation=12 style="border-radius: 5px;" class="my-10">
             <v-card-title class="back-ground">
               <v-row justify="center">
                 <span class="white--text title font" v-if="field.type == 1">Cancha {{ field.name }} Fútbol 5 </span>

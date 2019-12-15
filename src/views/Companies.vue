@@ -47,10 +47,10 @@
       </v-navigation-drawer>
       <BottomNavigation/>
         <v-container class="bottom "  style="border-radius: 25px 25px 0px 0px;">
-            <v-row  justify="space-around">
-              <v-col v-for="(company, i) in companies" :key="i" cols="12">
+            <v-row  justify="space-around"  class="ma-1">
+              <v-col v-for="(company, i) in companies" :key="i" >
                   <v-hover >
-                    <v-card  v-bind:to=" 'companies/'+company.id+'/info' " class="link  ma-2" max="300" :elevation=12 style="border-radius: 10px;">
+                    <v-card  v-bind:to=" 'companies/'+company.id+'/info' " class="link " max-width="320" :elevation=12 style="border-radius: 10px;">
                         <v-img  :src="company.image" height="10em" class="text-right pa-2" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.9)">
                             <v-card-title class="title white--text">
                               <v-row class="fill-height flex-column" justify="space-between">

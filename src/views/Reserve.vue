@@ -47,13 +47,12 @@
       </v-navigation-drawer>
       <BottomNavigation/>  
         <v-container class="bottom">
-        <span class=" font-weight-bold headline font  color-c ma-3 my-4">Reserva en cualquier lugar</span>
+        <span class=" font-weight-bold headline font  color-c ma-3 my-4">Reserva en cualquier lugarr</span>
           <v-divider class="grey mx-2"></v-divider>
-          <v-item-group class="ma-1"> 
-            <v-row justify-space-around>
-            <v-col  v-for="(company, index) in companies" :key="index" cols="12" md="4"> 
+            <v-row  justify="space-around" class="ma-1">
+            <v-col  v-for="(company, index) in companies" :key="index"> 
                 <v-hover >
-                  <v-card :elevation=12  style="border-radius: 10px;" class="link light-green lighten-5"  v-if="company.fields.length == 0" disabled>
+                  <v-card :elevation=12  style="border-radius: 10px;" class="link light-green ma-2 lighten-5"  max-width="300"   v-if="company.fields.length == 0" disabled>
                     <v-img :src="company.image" style="border-radius: 10px 10px 35px 35px;" height="150px" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.9)">
                     </v-img>
                       <v-row  no-gutters>
@@ -77,7 +76,7 @@
                     </v-card-actions>
                     </v-row>
                   </v-card>
-                  <v-card :elevation=12  style="border-radius: 10px;" class="link light-green lighten-5" v-else v-bind:to=" '/do_reserve/'+company.id+ '/reserve'">
+                  <v-card :elevation=12  style="border-radius: 10px;" class="link light-green lighten-5" max-width="350" v-else v-bind:to=" '/do_reserve/'+company.id+ '/reserve'">
                     <v-img :src="company.image" style="border-radius: 10px 10px 35px 35px;" height="175px" gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,0.9)">
                     </v-img>
                       <v-row  no-gutters >
@@ -100,14 +99,13 @@
                             <!--<span text small v-bind:to=" '/do_reserve/'+company.id+ '/reserve' " class="link font-weight-bold font-color font my-1" >Ver canchas<v-icon  size=20>mdi-stadium</v-icon>
                             </span>-->
                         </v-row>
-                      </v-btn>
+
                     </v-card-actions>
                     </v-row>
                   </v-card>
                 </v-hover>
             </v-col>
             </v-row>
-            </v-item-group>
         </v-container>
     </v-container>
 </template>
